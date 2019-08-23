@@ -21,9 +21,9 @@ The state space has 37 dimensions and contains the agent's velocity, along with 
 The task is episodic, and in order to solve the environment, agent must get an average score of +13 over 100 consecutive episodes.
 
 ### Getting Started
+1. Clone this GitHub repository (p1_navigation). If you do not use Linux, go to step 2., if you do, go to step 4.
 
-1. Download the environment from one of the links below.  You need only select the environment that matches your operating system:
-    - Linux: [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P1/Banana/Banana_Linux.zip)
+2. Download the environment from one of the links below.  You need only select the environment that matches your operating system:
     - Mac OSX: [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P1/Banana/Banana.app.zip)
     - Windows (32-bit): [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P1/Banana/Banana_Windows_x86.zip)
     - Windows (64-bit): [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P1/Banana/Banana_Windows_x86_64.zip)
@@ -32,7 +32,11 @@ The task is episodic, and in order to solve the environment, agent must get an a
 
     (_For AWS_) If you'd like to train the agent on AWS (and have not [enabled a virtual screen](https://github.com/Unity-Technologies/ml-agents/blob/master/docs/Training-on-Amazon-Web-Service.md)), then please use [this link](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P1/Banana/Banana_Linux_NoVis.zip) to obtain the environment.
 
-2. Place the file in the DRLND GitHub repository, in the `p1_navigation/` folder, and unzip (or decompress) the file. 
+3.  Place the file in this GitHub repository, in the `p1_navigation/` folder, and unzip (or decompress) the file and delete Banana_Linux folder.
+
+4. Open new terminal and run your virtual environment with Python3 : `$source activate drlnd`
+5. In terminal, place yourself inside of p1_navigation folder
+6. Run notebook: `$jupyter notebook Navigation.ipynb`
 
 ### Instructions
 
