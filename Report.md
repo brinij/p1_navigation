@@ -4,41 +4,28 @@
 
 # Project 1: Navigation
 
-### Introduction
+### Learning Algorithm : DQN
 
-For this project, an agent trains to navigate (and collect bananas!) in a large, square world.
+In 2015. a breakthrough algorithm designed by DeepMind was released. It is a learning algorith where agent plays video games better than a human player when it was given only a raw pixel data as an input. This agent is called Deep Q-network because at the heart of an agent is Deep Neural Network that acts as a function approximator. Following image ([source](https://www.nature.com/articles/nature14236)) illustrates the architecture of such a network where the first two layers are convolutional layers followed by a ReLu activation function, then one fully connected layer followed by a ReLu and last fully connected linear output layer that produced the vector of action values. 
 
-<img src="https://github.com/brinij/p1_navigation/blob/master/banana_trained.gif" width="400">
+<p align="center">
+<img src="https://github.com/brinij/p1_navigation/blob/master/dnn_structure_dqn_nature.jpg" width="600">
+</p>
 
-A reward of +1 is provided for collecting a yellow banana, and a reward of -1 is provided for collecting a blue banana.  Thus, the goal of agent is to collect as many yellow bananas as possible while avoiding blue bananas in a max 300 steps.  
+Training such a network requires a lot of training data and even then it is not guaranteed to converge to the optimal value function. Network weights can oscilate or diverge due to high correlation between actions and states. In order to prevent this, researchers have came up with several techniques, where these two have shown the most effective: 
 
-The state space has 37 dimensions and contains the agent's velocity, along with ray-based perception of objects around agent's forward direction.  Given this information, the agent has to learn how to best select actions.  Four discrete actions are available, corresponding to:
-- **`0`** - move forward.
-- **`1`** - move backward.
-- **`2`** - turn left.
-- **`3`** - turn right.
+- **Experience Replay** : it is the act of sampling a small batch of tuples from the replay buffer in order to learn. The replay buffer contains a collection of experience tuples (S, A, R, S_next). The tuples are gradually added to the buffer as we are interacting with the environment. In addition to breaking harmful correlations, experience replay allows us to learn more from individual tuples multiple times, recall rare occurrences, and in general make better use of our experience.
+- **Fixed Q Targets** : Using a separate network to estimate the TD (temporal difference) target. This target network has the same architecture as the function approximator but with frozen parameters. Every T steps (a hyperparameter) the parameters from the Q network are copied to the target network. This leads to more stable training because it keeps the target function fixed (for a while).
 
-The task is episodic, and in order to solve the environment, agent must get an average score of +13 over 100 consecutive episodes.
+There are two main processes in the algorithm: 
+- (SAMPLE) sample the environment by peroforming actions and store away the observed experienced tuples in a replay memory.
+- (LEARN) randomly select the small batch of tuples from this memory and learn from that batch using a gradient descent update step
 
-### Getting Started
-1. Clone this GitHub repository (p1_navigation). If you do not use Linux, go to step 2., if you do, go to step 4.
+These two processes are not directly dependant on each other, so it is possible to perform multiple sampling steps, then one learning step. The rest of the algorithm supports these two steps. At the beginning it is necessary to initialize: an empty replay memory which has finite capacity N (circular queue) and weights of both neural networks (Q and target) with random values. Also, it is not possible to run learning step until there is a minimum number of samples in the replay memory. Detailed algorithm pseudocode is shown in the picture below:
 
-2. Download the environment from one of the links below.  You need only select the environment that matches your operating system:
-    - Mac OSX: [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P1/Banana/Banana.app.zip)
-    - Windows (32-bit): [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P1/Banana/Banana_Windows_x86.zip)
-    - Windows (64-bit): [click here](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P1/Banana/Banana_Windows_x86_64.zip)
-    
-    (_For Windows users_) Check out [this link](https://support.microsoft.com/en-us/help/827218/how-to-determine-whether-a-computer-is-running-a-32-bit-version-or-64) if you need help with determining if your computer is running a 32-bit version or 64-bit version of the Windows operating system.
+<p align="center">
+<img src="https://github.com/brinij/p1_navigation/blob/master/dqn_algorithm.png" width="600">
+</p>
 
-    (_For AWS_) If you'd like to train the agent on AWS (and have not [enabled a virtual screen](https://github.com/Unity-Technologies/ml-agents/blob/master/docs/Training-on-Amazon-Web-Service.md)), then please use [this link](https://s3-us-west-1.amazonaws.com/udacity-drlnd/P1/Banana/Banana_Linux_NoVis.zip) to obtain the environment.
 
-3.  Place the file in this GitHub repository, in the `p1_navigation/` folder, and unzip (or decompress) the file and delete Banana_Linux folder.
-
-4. Open new terminal and run your virtual environment with Python3 : `$source activate drlnd`
-5. In terminal, place yourself inside of p1_navigation folder
-6. Run notebook: `$jupyter notebook Navigation.ipynb`
-
-### Instructions
-
-Follow the instructions in `Navigation.ipynb` to get started with training your own agent!  
-
+### Implementation Details
