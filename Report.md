@@ -29,3 +29,7 @@ These two processes are not directly dependant on each other, so it is possible 
 
 
 ### Implementation Details
+
+In the project file there are two Python files defining three classes. 
+- In `model.py` is Python class `QNetwork` which defines the structure of Neural Network used in this project for solving the Banana environment. It has three linear layers where first two are followed by ReLu activation functions and the last one is linear. First two hidden layers have 64 nodes and the last one has the size of the action space which is 4.
+- In `dqn_agent.py` 
