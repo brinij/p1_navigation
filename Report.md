@@ -42,7 +42,7 @@ Parameters that showed the best results are:
 - `TAU`         = 1e-3 , parameter for soft update of target parameters
 - `LR`          = 5e-4 , learning rate
 - `UPDATE_EVERY`= 4, how often to update the network
-- `EPS_DECAY` = 0.995, how much to decay epsilon from 1.0 to 0.0, for epsilon-greedy action selection
+- `EPS_DECAY` = 0.995, how much to decay epsilon from 1.0 to 0.1, for epsilon-greedy action selection
 
 ### Result
 
